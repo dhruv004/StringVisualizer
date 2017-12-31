@@ -9,4 +9,25 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io.connect('http://localhost');
+
+    socket.on('searchResult', function (data) {
+      console.log(data);
+    });
+
+    socket.on('finishedReading', function (data) {
+      console.log(data);
+    });
+
+    socket.on('errorReading', function (data) {
+      console.log('Error', data);
+    });
+
+    socket.on('news', function (data) {
+      console.log(data);
+      socket.emit('readFile', { filename: 'sample.txt' });
+    });
+  </script>
 </html>
