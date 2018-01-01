@@ -1,2 +1,16 @@
-<svg ref="visualisation" id="visualisation" width="1000" height="500"></svg>
+
+<div>
+    <div>
+        File Name: <input v-model="fileName" type="text"/>
+    </div>
+    <div>
+        Search String: <input v-model="search" type="text"/>
+    </div>
+    <div>
+        <button type="button" @click="searchString()">Search</button>
+    </div>
+    <div>
+        <svg ref="visualisation" id="visualisation" width="1000" height="500"></svg>
+    </div>
+</div>
     
