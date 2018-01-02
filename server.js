@@ -8,11 +8,7 @@ var readline = require('readline');
 var stream = require('stream');
 
 server.listen(3030,()=>{
-    console.log('Server listening on port 80')
-});
-
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/index.html');
+    console.log('Server listening on port 3030')
 });
 
 io.on('connection', function (socket) {
@@ -28,7 +24,6 @@ io.on('connection', function (socket) {
 
         var totalCount = 0;
         var perCount = 100;
-        var resultData = {};
         var wordCount = 0;
 
         rl.on('line', function(line) {
@@ -36,23 +31,17 @@ io.on('connection', function (socket) {
             for(var i = 0; i < words.length ; i++){
                 totalCount++;
                 
-                if(words[i] == data.searchString) wordCount++;
+                if(words[i].toLowerCase() == data.searchString.toLowerCase()) wordCount++;
                 if(totalCount % perCount==0){
-                    resultData = Object.assign(resultData,{
-                        [totalCount]: wordCount
-                    });
                     socket.emit('searchResult', { 
                         [totalCount]: wordCount 
                     });
                     wordCount=0;
                 }
             }
-
-            // socket.emit('searchResult', { searchResult: resultData });
         });
                 
         rl.on('close', function() {
-            console.log(resultData)
             socket.emit('finishedReading', { readingFinished: true });
         });
         
